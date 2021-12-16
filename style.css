@@ -15,9 +15,9 @@ body{
 #container{
     display:flex;
     flex-direction: column;
-    width: 600px;
+    width: min(600px,100%);
     text-align:right;
-    height: 800px;
+    height: min(800px,100%);
     background-color: green;
     border: 2vh solid black;
     border-radius: 1vh;
