@@ -1,0 +1,82 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin:0px;
+}
+
+#hersey{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#container{
+    display:flex;
+    flex-direction: column;
+    width: 600px;
+    text-align:right;
+    height: 800px;
+    background-color: green;
+    border: 2vh solid black;
+    border-radius: 1vh;
+    /* margin: 10% 20%; */
+}
+
+#display{
+    border: 2vh solid green;
+    border-radius: 1vh 1vh 0px 0px;
+    font-size: 48px;
+    padding: 8px;
+    
+}
+
+#displayText{
+    border: 2vh inset #DCDCDC;
+    background-color: whitesmoke;
+    /* padding: 16px; */
+    border-radius: 1vh;
+    margin: 0px;
+    padding: 8px;
+}
+
+#tuslar{
+    display:flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 16px;
+    border: 2vh solid green;
+    border-radius: 0px 0px 1vh 1vh;
+    font-weight: 900;
+    /* width: 100%; */
+}
+
+.satir{
+    display:flex;
+    gap:20px;
+    /* width: 90%; */
+}
+
+.tus{
+    background-color: ivory;
+    padding: 30px;
+    border-style: outset;
+    border-radius: 1vw;
+    width: 25%;
+    font-size: 36px;
+}
+
+.islem{
+    background-color: darkslategrey;
+    text-align: center;
+    color: ivory;
+}
+
+.unselectable {
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
