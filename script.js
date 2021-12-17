@@ -52,12 +52,16 @@ esittir.addEventListener('click',hesapla);
 function sayiKoy(e){
     if (ekranDegeri.textContent.length<15){
         ekranDegeri.textContent+=e.target.textContent;
-        ekranDegeri.textContent=ekranDegeri.textContent.replace(/^[0]/g,"");
-        ekranDegeri.textContent=ekranDegeri.textContent.replace(/([^0-9])([0])([0-9])/g,duzenleyici);
+        ekranDegeri.textContent=ekranDegeri.textContent.replace(/^([0])([0-9])/g,duzenleyici1);
+        ekranDegeri.textContent=ekranDegeri.textContent.replace(/([^0-9])([0])([0-9])/g,duzenleyici2);
     }    
 }
+function duzenleyici1(match, p1, p2, p3, offset, string){
+    // console.log(p1);
+    return p2;
+}
 
-function duzenleyici(match, p1, p2, p3, offset, string){
+function duzenleyici2(match, p1, p2, p3, offset, string){
     return [p1, p3].join('');
 }
 
@@ -76,18 +80,24 @@ function temizle(){
 }
 
 function hesapla(){
-    if (!sonHucre(ekranDegeri.textContent)){
-        ekranDegeri.textContent = ekranDegeri.textContent.slice(0, -1); 
+    let sonucMetni=ekranDegeri.textContent;
+    if (!sonHucre(sonucMetni)){
+        sonucMetni = sonucMetni.slice(0, -1); 
     }
-    let sayi1=parseInt(ekranDegeri.textContent);
-    ekranDegeri.textContent=ekranDegeri.textContent.replace(sayi1,'');
+    let sayi1=parseInt(sonucMetni);
+    sonucMetni=sonucMetni.replace(sayi1,'');
     console.log(sayi1);
-    let islem=ekranDegeri.textContent.charAt(0);
-    ekranDegeri.textContent=ekranDegeri.textContent.replace(islem,'');
+    if (sonucMetni === "")
+    {
+        ekranDegeri.textContent=sayi1;
+        return;
+    }
+    let islem=sonucMetni.charAt(0);
+    sonucMetni=sonucMetni.replace(islem,'');
     console.log(islem);
-    let sayi2=parseInt(ekranDegeri.textContent);
-    ekranDegeri.textContent=ekranDegeri.textContent.replace(sayi2,'');
+    let sayi2=parseInt(sonucMetni);
+    sonucMetni=sonucMetni.replace(sayi2,'');
     console.log(sayi2);
-    ekranDegeri.textContent=operate(sayi1,islem,sayi2)+ekranDegeri.textContent;
+    ekranDegeri.textContent=operate(sayi1,islem,sayi2)+sonucMetni;
 
 }
