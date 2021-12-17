@@ -21,7 +21,6 @@ body{
     background-color: green;
     border: 2vh solid black;
     border-radius: 1vh;
-    /* margin: 10% 20%; */
 }
 
 #display{
@@ -35,7 +34,6 @@ body{
 #displayText{
     border: 2vh inset #DCDCDC;
     background-color: whitesmoke;
-    /* padding: 16px; */
     border-radius: 1vh;
     margin: 0px;
     padding: 8px;
@@ -43,29 +41,26 @@ body{
 
 #tuslar{
     display:flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 16px;
+    gap: 1vh 1vw;
     border: 2vh solid green;
+    justify-content: space-around;
     border-radius: 0px 0px 1vh 1vh;
-    font-weight: 900;
-    /* width: 100%; */
+    flex-wrap: wrap;    
 }
 
-.satir{
-    display:flex;
-    gap:20px;
-    /* width: 90%; */
-}
 
-.tus{
+button{
     background-color: ivory;
-    padding: 30px;
-    border-style: outset;
+    padding: 2vw;
     border-radius: 1vw;
-    width: 25%;
-    font-size: 36px;
+    width: 21.9%;
+    font-size: 3vw;
+    font-family: inherit;
+    text-align: end;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2), 0 3px 10px 0 rgba(0,0,0,0.19);
+    font-weight: 900;
 }
+
 
 .islem{
     background-color: darkslategrey;
