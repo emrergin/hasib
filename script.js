@@ -34,9 +34,9 @@ const islemler = document.querySelectorAll('.islem');
 const esittir=document.getElementById(`=`);
 const tertemiz=document.getElementById(`C`);
 
-let mevcutSayilar=[];
-let mevcutIslemler=[];
-// console.log(sonHucre(ekranDegeri.textContent));
+let ciktiGenisligi = ekranDegeri.clientWidth ;
+ekranDegeri.style.cssText=`font-size:${ciktiGenisligi/9.85}px;`;
+
 
 sayilar.forEach((sayi) => {
     sayi.addEventListener('click', sayiKoy);
