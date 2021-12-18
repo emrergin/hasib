@@ -15,12 +15,18 @@ function carp()
 
 function bol()
 {
-    if (arguments[1]===0){
-        return `Sonsuz`
-    }
     return arguments[0]/arguments[1];
 }
 
+// function bol2()
+// {
+//     if (isFinite(arguments[0]/arguments[1]) {
+//         return arguments[0]/arguments[1];
+//       }
+//     else if (Math.sign(arguments[0])=== Math.sign(arguments[1]))
+//     return (∞)
+    
+// }
 function operate(say1,islem,say2){
     if (islem==`+`){return ekle(say1,say2);}
     if (islem==`-`){return cikar(say1,say2);}
@@ -33,6 +39,7 @@ const sayilar = document.querySelectorAll('.sayi');
 const islemler = document.querySelectorAll('.islem');
 const esittir=document.getElementById(`=`);
 const tertemiz=document.getElementById(`C`);
+let gercekDeger=`0`;
 
 let ciktiGenisligi = ekranDegeri.clientWidth ;
 ekranDegeri.style.cssText=`font-size:${ciktiGenisligi/9.85}px;`;
@@ -51,9 +58,10 @@ esittir.addEventListener('click',hesapla);
 
 function sayiKoy(e){
     if (ekranDegeri.textContent.length<15){
-        ekranDegeri.textContent+=e.target.textContent;
-        ekranDegeri.textContent=ekranDegeri.textContent.replace(/^([0])([0-9])/g,duzenleyici1);
-        ekranDegeri.textContent=ekranDegeri.textContent.replace(/([^0-9])([0])([0-9])/g,duzenleyici2);
+        gercekDeger+=e.target.textContent;
+        gercekDeger=gercekDeger.replace(/^([0])([0-9])/g,duzenleyici1);
+        gercekDeger=gercekDeger.replace(/([^0-9])([0])([0-9])/g,duzenleyici2);
+        ekranDegeri.textContent=gorselDegerBul(gercekDeger);
     }    
 }
 function duzenleyici1(match, p1, p2, p3, offset, string){
@@ -66,8 +74,10 @@ function duzenleyici2(match, p1, p2, p3, offset, string){
 }
 
 function islemKoy(e){
-    if (ekranDegeri.textContent.length<15 && sonHucre(ekranDegeri.textContent)){
-        ekranDegeri.textContent+=e.target.textContent;
+    if (ekranDegeri.textContent.length<15 && !(gercekDeger.charAt(gercekDeger.length-1)===`+`)&& !(gercekDeger.charAt(gercekDeger.length-1)===`-`) &&
+    !(gercekDeger.charAt(gercekDeger.length-1)===`×`) && !(gercekDeger.charAt(gercekDeger.length-1)===`÷`)){
+        gercekDeger+=e.target.textContent;
+        ekranDegeri.textContent=gorselDegerBul(gercekDeger);
     }    
 }
 
@@ -76,28 +86,52 @@ function sonHucre(metin){
 }
 
 function temizle(){
-    ekranDegeri.textContent=0;
+    ekranDegeri.textContent=`0`;
+    gercekDeger=`0`;
 }
 
 function hesapla(){
-    let sonucMetni=ekranDegeri.textContent;
+    let sonucMetni=gercekDeger;
     if (!sonHucre(sonucMetni)){
         sonucMetni = sonucMetni.slice(0, -1); 
     }
-    let sayi1=parseInt(sonucMetni);
+    let sayi1=parseFloat(sonucMetni);
     sonucMetni=sonucMetni.replace(sayi1,'');
     console.log(sayi1);
     if (sonucMetni === "")
     {
-        ekranDegeri.textContent=sayi1;
+        gercekDeger=sayi1;
+        ekranDegeri.textContent=gorselDegerBul(gercekDeger);
         return;
     }
     let islem=sonucMetni.charAt(0);
     sonucMetni=sonucMetni.replace(islem,'');
     console.log(islem);
-    let sayi2=parseInt(sonucMetni);
+    let sayi2=parseFloat(sonucMetni);
     sonucMetni=sonucMetni.replace(sayi2,'');
     console.log(sayi2);
-    ekranDegeri.textContent=operate(sayi1,islem,sayi2)+sonucMetni;
+    gercekDeger=operate(sayi1,islem,sayi2)+sonucMetni;
+    ekranDegeri.textContent=gorselDegerBul(gercekDeger);
+}
 
+function gorselDegerBul(metin){
+    let geciciDeger=``;
+    geciciDeger= metin.replace(Infinity,'∞');
+    geciciDeger=geciciDeger.replace(/(^[0-9]+)(\+|-|×|÷)([0-9]+)(\+|-|×|÷)/g,duzenleyici3);
+    let geciciDeger2=geciciDeger;
+    do{
+        geciciDeger=geciciDeger2;
+        geciciDeger2=geciciDeger.replace(/^\(.+\)(\+|-|×|÷)([0-9]+)(\+|-|×|÷)/g,duzenleyici3);
+        // console.log(geciciDeger);
+        // console.log(geciciDeger2);
+    }while(geciciDeger!==geciciDeger2);    
+    return geciciDeger;
+}
+
+function duzenleyici3(match, p1, p2, p3, offset, string){
+    let bas=Array.from(match);
+    bas.pop();
+    bas=bas.join('');
+    console.log(bas);
+    return (`(`+bas+`)`+match.charAt(match.length-1));
 }
