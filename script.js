@@ -1,3 +1,4 @@
+// BURADA HESAP ICIN GEREKEN FONKSIYONLAR VAR=======================================
 function ekle()
 {
     return arguments[0]+arguments[1];
@@ -18,15 +19,6 @@ function bol()
     return arguments[0]/arguments[1];
 }
 
-// function bol2()
-// {
-//     if (isFinite(arguments[0]/arguments[1]) {
-//         return arguments[0]/arguments[1];
-//       }
-//     else if (Math.sign(arguments[0])=== Math.sign(arguments[1]))
-//     return (∞)
-    
-// }
 function operate(say1,islem,say2){
     if (islem==`+`){return ekle(say1,say2);}
     if (islem==`-`){return cikar(say1,say2);}
@@ -34,12 +26,21 @@ function operate(say1,islem,say2){
     if (islem==`÷`){return bol(say1,say2);}
 }
 
+// BURADA BUTUN LISTENERLAR TANIMLANIYOR=======================================
 const ekranDegeri=document.getElementById(`displayText`);
 const sayilar = document.querySelectorAll('.sayi');
 const islemler = document.querySelectorAll('.islem');
-const esittir=document.getElementById(`=`);
+const esittir=document.getElementById(`esittir`);
 const tertemiz=document.getElementById(`C`);
+const geri=document.getElementById(`sil`);
+const nokta=document.getElementById(`nokta`);
+const kurukafa=document.getElementById(`dont`);
+const dugmeler=document.querySelectorAll(`.karman`);
+const audioses = document.querySelector("#ses");
+const audiokisases = document.querySelector("#kisases");
+
 let gercekDeger=`0`;
+let kaosSayaci=0;
 
 let ciktiGenisligi = ekranDegeri.clientWidth ;
 ekranDegeri.style.cssText=`font-size:${ciktiGenisligi/9.85}px;`;
@@ -55,7 +56,11 @@ islemler.forEach((islem) => {
 
 tertemiz.addEventListener('click',temizle);
 esittir.addEventListener('click',hesapla);
+geri.addEventListener('click',sil);
+kurukafa.addEventListener('click',kaosCikar);
+nokta.addEventListener('click',noktala);
 
+// BURADA DUGMELERLE ILGILI FONKSIYONLAR VAR=======================================
 function sayiKoy(e){
     if (ekranDegeri.textContent.length<15){
         gercekDeger+=e.target.textContent;
@@ -88,6 +93,7 @@ function sonHucre(metin){
 function temizle(){
     ekranDegeri.textContent=`0`;
     gercekDeger=`0`;
+    kaosSayaci=0;
 }
 
 function hesapla(){
@@ -97,7 +103,6 @@ function hesapla(){
     }
     let sayi1=parseFloat(sonucMetni);
     sonucMetni=sonucMetni.replace(sayi1,'');
-    console.log(sayi1);
     if (sonucMetni === "")
     {
         gercekDeger=`${sayi1}`;
@@ -106,14 +111,50 @@ function hesapla(){
     }
     let islem=sonucMetni.charAt(0);
     sonucMetni=sonucMetni.replace(islem,'');
-    console.log(islem);
     let sayi2=parseFloat(sonucMetni);
     sonucMetni=sonucMetni.replace(sayi2,'');
-    console.log(sayi2);
     gercekDeger=operate(sayi1,islem,sayi2)+sonucMetni;
     ekranDegeri.textContent=gorselDegerBul(gercekDeger);
 }
 
+function sil(){
+    gercekDeger=gercekDeger.slice(0, -1);
+    if (gercekDeger.length===0) {
+        gercekDeger=`0`;
+    }
+    ekranDegeri.textContent=gorselDegerBul(gercekDeger);
+}
+
+function kaosCikar(){
+    kaosSayaci+=1;
+    if (kaosSayaci<=3){
+        alert("YAPMA!");
+    }
+    if (kaosSayaci>3){
+        dugmeler.forEach((dugme) => {
+            dugme.style.order= Math.floor(Math.random() * 20+1);
+        })    
+    }
+    if (kaosSayaci>5){
+        dugmeler.forEach((dugme) => {
+            let zar=Math.random();
+            if (zar>(1-kaosSayaci/20)){
+                Math.random()>0.5? dugme.style.visibility="hidden" : dugme.style.display="none";
+                ekranDegeri.style.cssText+=`transform: translate(${Math.random()}vw, ${Math.random()}vh) rotate(${25*Math.random()}deg)`;
+            }
+        })    
+    } 
+}
+
+function noktala(){
+    if (ekranDegeri.textContent.length<15 && sonHucre(gercekDeger) && !gercekDeger.match(/\.([^\+|\-|×|÷])+$/)){
+        gercekDeger+=`.`;
+    }
+    ekranDegeri.textContent=gorselDegerBul(gercekDeger);
+}
+// 
+
+// BURADAN SONRASI GORULEN DEGERLE ILGILI=======================================
 function gorselDegerBul(metin){
     let geciciDeger=``;
     geciciDeger= metin.replace(Infinity,'∞');
@@ -122,8 +163,6 @@ function gorselDegerBul(metin){
     do{
         geciciDeger=geciciDeger2;
         geciciDeger2=geciciDeger.replace(/^\(.+\)(\+|-|×|÷)([0-9]+)(\+|-|×|÷)/g,parantezEkle);
-        // console.log(geciciDeger);
-        // console.log(geciciDeger2);
     }while(geciciDeger!==geciciDeger2);  
     geciciDeger=geciciDeger.replace(/([0-9]+)\.([0-9]+)/g,yuvarla);  
     return geciciDeger;
