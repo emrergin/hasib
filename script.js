@@ -59,17 +59,17 @@ esittir.addEventListener('click',hesapla);
 function sayiKoy(e){
     if (ekranDegeri.textContent.length<15){
         gercekDeger+=e.target.textContent;
-        gercekDeger=gercekDeger.replace(/^([0])([0-9])/g,duzenleyici1);
-        gercekDeger=gercekDeger.replace(/([^0-9])([0])([0-9])/g,duzenleyici2);
+        gercekDeger=gercekDeger.replace(/^([0])([0-9])/g,bastakiSifiriSil);
+        gercekDeger=gercekDeger.replace(/([^0-9])([0])([0-9])/g,islemSonrasiSifiriSil);
         ekranDegeri.textContent=gorselDegerBul(gercekDeger);
     }    
 }
-function duzenleyici1(match, p1, p2, p3, offset, string){
+function bastakiSifiriSil(match, p1, p2, p3, offset, string){
     // console.log(p1);
     return p2;
 }
 
-function duzenleyici2(match, p1, p2, p3, offset, string){
+function islemSonrasiSifiriSil(match, p1, p2, p3, offset, string){
     return [p1, p3].join('');
 }
 
@@ -100,7 +100,7 @@ function hesapla(){
     console.log(sayi1);
     if (sonucMetni === "")
     {
-        gercekDeger=sayi1;
+        gercekDeger=`${sayi1}`;
         ekranDegeri.textContent=gorselDegerBul(gercekDeger);
         return;
     }
@@ -117,21 +117,28 @@ function hesapla(){
 function gorselDegerBul(metin){
     let geciciDeger=``;
     geciciDeger= metin.replace(Infinity,'∞');
-    geciciDeger=geciciDeger.replace(/(^[0-9]+)(\+|-|×|÷)([0-9]+)(\+|-|×|÷)/g,duzenleyici3);
+    geciciDeger=geciciDeger.replace(/(^[0-9]+)(\+|-|×|÷)([0-9]+)(\+|-|×|÷)/g,parantezEkle);
     let geciciDeger2=geciciDeger;
     do{
         geciciDeger=geciciDeger2;
-        geciciDeger2=geciciDeger.replace(/^\(.+\)(\+|-|×|÷)([0-9]+)(\+|-|×|÷)/g,duzenleyici3);
+        geciciDeger2=geciciDeger.replace(/^\(.+\)(\+|-|×|÷)([0-9]+)(\+|-|×|÷)/g,parantezEkle);
         // console.log(geciciDeger);
         // console.log(geciciDeger2);
-    }while(geciciDeger!==geciciDeger2);    
+    }while(geciciDeger!==geciciDeger2);  
+    geciciDeger=geciciDeger.replace(/([0-9]+)\.([0-9]+)/g,yuvarla);  
     return geciciDeger;
 }
 
-function duzenleyici3(match, p1, p2, p3, offset, string){
+
+function parantezEkle(match, p1, p2, p3, offset, string){
     let bas=Array.from(match);
     bas.pop();
     bas=bas.join('');
-    console.log(bas);
+    // console.log(bas);
     return (`(`+bas+`)`+match.charAt(match.length-1));
+}
+
+function yuvarla(match, p1, p2, p3, offset, string){
+    match=Math.round((parseFloat(match)+ Number.EPSILON) * 10) / 10;
+    return match;
 }
