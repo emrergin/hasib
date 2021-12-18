@@ -1,6 +1,5 @@
 *{
     box-sizing: border-box;
-    font-family: 'Courier New', Courier, monospace;
 }
 
 body{
@@ -40,6 +39,7 @@ body{
 #displayText{
     border: 2vh inset #DCDCDC;
     background-color: whitesmoke;
+    font-family: 'Courier New', Courier, monospace;
     border-radius: 1vh;
     margin: 0px;
     padding: 1vh;
