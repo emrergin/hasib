@@ -89,7 +89,7 @@ function islemKoy(e){
 
 function islemKoyGenel(ek){
     if (ekranDegeri.textContent.length<15 && !(gercekDeger.charAt(gercekDeger.length-1)===`+`)&& !(gercekDeger.charAt(gercekDeger.length-1)===`-`) &&
-    !(gercekDeger.charAt(gercekDeger.length-1)===`×`) && !(gercekDeger.charAt(gercekDeger.length-1)===`÷`)){
+    !(gercekDeger.charAt(gercekDeger.length-1)===`×`) && !(gercekDeger.charAt(gercekDeger.length-1)===`÷`)  &&!(gercekDeger.charAt(gercekDeger.length-1)===`.`)){
         gercekDeger+=ek;
         ekranDegeri.textContent=gorselDegerBul(gercekDeger);
     }    
