@@ -60,10 +60,16 @@ geri.addEventListener('click',sil);
 kurukafa.addEventListener('click',kaosCikar);
 nokta.addEventListener('click',noktala);
 
+window.addEventListener('keydown',tuslarlaYaz);
+
 // BURADA DUGMELERLE ILGILI FONKSIYONLAR VAR=======================================
 function sayiKoy(e){
+    sayiKoyGenel(e.target.textContent);
+}
+
+function sayiKoyGenel(ek){
     if (ekranDegeri.textContent.length<15){
-        gercekDeger+=e.target.textContent;
+        gercekDeger+=ek;
         gercekDeger=gercekDeger.replace(/^([0])([0-9])/g,bastakiSifiriSil);
         gercekDeger=gercekDeger.replace(/([^0-9])([0])([0-9])/g,islemSonrasiSifiriSil);
         ekranDegeri.textContent=gorselDegerBul(gercekDeger);
@@ -77,11 +83,14 @@ function bastakiSifiriSil(match, p1, p2, p3, offset, string){
 function islemSonrasiSifiriSil(match, p1, p2, p3, offset, string){
     return [p1, p3].join('');
 }
-
 function islemKoy(e){
+    islemKoyGenel(e.target.textContent);
+}
+
+function islemKoyGenel(ek){
     if (ekranDegeri.textContent.length<15 && !(gercekDeger.charAt(gercekDeger.length-1)===`+`)&& !(gercekDeger.charAt(gercekDeger.length-1)===`-`) &&
     !(gercekDeger.charAt(gercekDeger.length-1)===`×`) && !(gercekDeger.charAt(gercekDeger.length-1)===`÷`)){
-        gercekDeger+=e.target.textContent;
+        gercekDeger+=ek;
         ekranDegeri.textContent=gorselDegerBul(gercekDeger);
     }    
 }
@@ -152,7 +161,27 @@ function noktala(){
     }
     ekranDegeri.textContent=gorselDegerBul(gercekDeger);
 }
-// 
+
+function tuslarlaYaz(e){
+    if (e.keyCode===97 || e.keyCode===49) {sayiKoyGenel(`1`);}
+    if (e.keyCode===98 || e.keyCode===50) {sayiKoyGenel(`2`);}
+    if (e.keyCode===99 || e.keyCode===51) {sayiKoyGenel(`3`);}
+    if (e.keyCode===100 || e.keyCode===52) {sayiKoyGenel(`4`);}
+    if (e.keyCode===101 || e.keyCode===53) {sayiKoyGenel(`5`);}
+    if (e.keyCode===102 || e.keyCode===54) {sayiKoyGenel(`6`);}
+    if (e.keyCode===103 || e.keyCode===55) {sayiKoyGenel(`7`);}
+    if (e.keyCode===104 || e.keyCode===56) {sayiKoyGenel(`8`);}
+    if (e.keyCode===105 || e.keyCode===57) {sayiKoyGenel(`9`);}
+    if (e.keyCode===96 || e.keyCode===58) {sayiKoyGenel(`0`);}
+    if (e.keyCode===107 || e.keyCode===187) {islemKoyGenel(`+`);}
+    if (e.keyCode===109) {islemKoyGenel(`-`);}
+    if (e.keyCode===106) {islemKoyGenel(`×`);}
+    if (e.keyCode===111 || e.keyCode===191) {islemKoyGenel(`÷`);}
+    if (e.keyCode===13) {hesapla();}
+    if (e.keyCode===190) {noktala();}
+}
+
+
 
 // BURADAN SONRASI GORULEN DEGERLE ILGILI=======================================
 function gorselDegerBul(metin){
