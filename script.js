@@ -140,6 +140,7 @@ function kaosCikar(){
         alert("YAPMA!");
     }
     if (kaosSayaci>3){
+        kurukafa.style.order= Math.floor(Math.random() * 20+1);
         dugmeler.forEach((dugme) => {
             dugme.style.order= Math.floor(Math.random() * 20+1);
         })    
