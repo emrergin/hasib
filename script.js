@@ -67,8 +67,9 @@ function sayiKoy(e){
     sayiKoyGenel(e.target.textContent);
 }
 
+// Ekrandaki uzunlugun 15'in altinda olmasini ve kullanicinin 2 ondalik basamak girememesini kontrol ediyor. Bastaki sifirlari da duzeltiyor.
 function sayiKoyGenel(ek){
-    if (ekranDegeri.textContent.length<15){
+    if (ekranDegeri.textContent.length<15 && !gercekDeger.match(/\.\d+$/)){
         gercekDeger+=ek;
         gercekDeger=gercekDeger.replace(/^([0])([0-9])/g,bastakiSifiriSil);
         gercekDeger=gercekDeger.replace(/([^0-9])([0])([0-9])/g,islemSonrasiSifiriSil);
