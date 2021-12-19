@@ -174,12 +174,12 @@ function tuslarlaYaz(e){
     if (e.keyCode===104 || e.keyCode===56) {sayiKoyGenel(`8`);}
     if (e.keyCode===105 || e.keyCode===57) {sayiKoyGenel(`9`);}
     if (e.keyCode===96 || e.keyCode===58) {sayiKoyGenel(`0`);}
-    if (e.keyCode===107 || e.keyCode===187) {islemKoyGenel(`+`);}
-    if (e.keyCode===109) {islemKoyGenel(`-`);}
+    if (e.keyCode===107 || e.key===`+`) {islemKoyGenel(`+`);}
+    if (e.keyCode===109 || e.key===`-`) {islemKoyGenel(`-`);}
     if (e.keyCode===106) {islemKoyGenel(`×`);}
     if (e.keyCode===111 || e.keyCode===191) {islemKoyGenel(`÷`);}
-    if (e.keyCode===13) {hesapla();}
-    if (e.keyCode===190 || e.keycode===110 || e.keycode===188) {noktala();}
+    if (e.keyCode===13 || e.key===`=`) {hesapla();}
+    if (e.keyCode===190 || e.keyCode===110 || e.keyCode===188) {noktala();}
     if (e.keyCode===8) {sil();}
 }
 
