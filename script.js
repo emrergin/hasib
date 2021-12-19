@@ -179,7 +179,8 @@ function tuslarlaYaz(e){
     if (e.keyCode===106) {islemKoyGenel(`×`);}
     if (e.keyCode===111 || e.keyCode===191) {islemKoyGenel(`÷`);}
     if (e.keyCode===13) {hesapla();}
-    if (e.keyCode===190) {noktala();}
+    if (e.keyCode===190 || e.keycode===110 || e.keycode===188) {noktala();}
+    if (e.keyCode===8) {sil();}
 }
 
 
